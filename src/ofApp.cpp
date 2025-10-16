@@ -200,8 +200,8 @@ void ofApp::setup() {
 	
 	// 5) Equirect unwrap target (4096 x 2048) + shader
 	ofFbo::Settings e;
-	e.width  = 4096*2;
-	e.height = 2048*2;
+	e.width  = faceSize*4;
+	e.height = faceSize*2;
 	e.internalformat = GL_RGBA16F;
 	e.useDepth = false;
 	e.textureTarget = GL_TEXTURE_2D;
