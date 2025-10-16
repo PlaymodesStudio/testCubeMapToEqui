@@ -370,7 +370,7 @@ void ofApp::keyPressed(int key){
 	if(key=='s' || key=='S'){
 		ofPixels px;
 		equirectFbo.readToPixels(px);
-		ofSaveImage(px, "equirect_4096x2048.png"); // exact 4096x2048
-		ofLogNotice() << "Saved equirect_4096x2048.png";
+		ofSaveImage(px, "equirect_" + ofGetTimestampString() + ".png");
+		ofLogNotice() << "Saved equirect png file";
 	}
 }
