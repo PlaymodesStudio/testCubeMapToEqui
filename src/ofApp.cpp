@@ -42,8 +42,7 @@ void ofApp::setup() {
 	glGenTextures(1, &cubeColor);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, cubeColor);
 	for (int i=0;i<6;++i) {
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X+i, 0, GL_RGBA16F,
-					 faceSize, faceSize, 0, GL_RGBA, GL_HALF_FLOAT, nullptr);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X+i, 0, GL_RGBA16F,faceSize, faceSize, 0, GL_RGBA, GL_HALF_FLOAT, nullptr);
 	}
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -287,25 +286,6 @@ void ofApp::update() {
 	makeCubeViews(capturePos, view);
 }
 
-void ofApp::drawTestSpheres(float t) {
-	// Assumes captureShader is already bound and depth test enabled,
-	// and that we'll set uModel per-instance.
-	for (const auto& s : spheres) {
-		float a = t * s.angularSpeed + s.phase;
-		
-		// Orbit: rotate the base direction around its axis, then scale by radius
-		glm::mat4 R = glm::rotate(glm::mat4(1.0f), a, s.axis);
-		glm::vec3 pos = glm::vec3(R * glm::vec4(s.centerDir * s.orbitRadius, 1.0f));
-		
-		// Model matrix = translate(pos) * uniform scale(s.radius)
-		glm::mat4 M(1.0f);
-		M = glm::translate(M, pos);
-		M = glm::scale(M, glm::vec3(s.radius));
-		
-		captureShader.setUniformMatrix4f("uModel", M);
-		unitSphere.getMesh().draw();
-	}
-}
 
 void ofApp::draw() {
 	// --- 1) Single-pass scene capture to layered cubemap ---------------------
@@ -365,6 +345,27 @@ void ofApp::drawScene() {
 	
 	glDisable(GL_DEPTH_TEST);
 }
+
+void ofApp::drawTestSpheres(float t) {
+	// Assumes captureShader is already bound and depth test enabled,
+	// and that we'll set uModel per-instance.
+	for (const auto& s : spheres) {
+		float a = t * s.angularSpeed + s.phase;
+		
+		// Orbit: rotate the base direction around its axis, then scale by radius
+		glm::mat4 R = glm::rotate(glm::mat4(1.0f), a, s.axis);
+		glm::vec3 pos = glm::vec3(R * glm::vec4(s.centerDir * s.orbitRadius, 1.0f));
+		
+		// Model matrix = translate(pos) * uniform scale(s.radius)
+		glm::mat4 M(1.0f);
+		M = glm::translate(M, pos);
+		M = glm::scale(M, glm::vec3(s.radius));
+		
+		captureShader.setUniformMatrix4f("uModel", M);
+		unitSphere.getMesh().draw();
+	}
+}
+
 
 void ofApp::keyPressed(int key){
 	if(key=='s' || key=='S'){
