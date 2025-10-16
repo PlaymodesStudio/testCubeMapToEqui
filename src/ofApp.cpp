@@ -351,7 +351,7 @@ void ofApp::draw() {
 	
 	ofBackground(12);
 	float W = ofGetWidth(), H = ofGetHeight();
-	float aspect = 4096.0f/2048.0f;
+	float aspect = 2.0f; //always we need an AR of 2.0
 	float drawW = W, drawH = W/aspect;
 	if (drawH>H){ drawH=H; drawW=H*aspect; }
 	equirectFbo.draw((W-drawW)*0.5f, (H-drawH)*0.5f, drawW, drawH);
