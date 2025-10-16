@@ -15,7 +15,7 @@ public:
   GLuint cubeColor = 0;     // GL_TEXTURE_CUBE_MAP (RGBA16F recommended)
   GLuint cubeDepth = 0;     // GL_TEXTURE_CUBE_MAP (DEPTH24)
   GLuint cubeFbo   = 0;     // layered FBO
-  int    faceSize  = 1024;  // 4096x2048 equirect target
+  int    faceSize  = 2048;  // 4096x2048 equirect target
 
   ofShader captureShader;   // VS+GS+FS for the cubemap capture
   glm::mat4 proj90;         // 90° projection
